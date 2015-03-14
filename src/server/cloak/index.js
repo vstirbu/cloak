@@ -47,7 +47,7 @@ module.exports = (function() {
 
     // shorthand to get host string for socket
     _host: function(socket) {
-      return socket.handshake.address.address;
+      return socket.handshake.address;//.address;
     },
 
     // configure the server
@@ -75,7 +75,7 @@ module.exports = (function() {
               'Pass the server into express instead of port.';
       }
 
-      io = socketIO.listen(config.express || config.port);
+      io = socketIO(config.express || config.port);
 
       if (config.express) {
         console.log(('cloak running with express on port ' +
@@ -90,7 +90,7 @@ module.exports = (function() {
         delete config.express;
       }
 
-      io.set('log level', config.logLevel);
+      // io.set('log level', config.logLevel);
 
       lobby = new Room(cloak, 'Lobby', 0, events.lobby, true);
 
@@ -117,6 +117,7 @@ module.exports = (function() {
 
         socket.on('cloak-begin', function(data) {
           var user = new User(cloak, socket, data);
+
           users[user.id] = user;
           socketIdToUserId[socket.id] = user.id;
           cloak._setupHandlers(socket);
@@ -201,6 +202,11 @@ module.exports = (function() {
         // aka prune users that have been disconnected too long
         if (config.reconnectWait !== null || config.reconnectWaitRoomless !== null) {
           _(users).forEach(function(user) {
+
+            if (user === undefined) {
+              console.log(user);
+              return;
+            }
 
             if (user.connected()) {
               return;
@@ -340,7 +346,7 @@ module.exports = (function() {
       // Shut down socket server
       if (io) {
         try {
-          io.server.close();
+          io.close();
           callback();
         }
         catch(e) {

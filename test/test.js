@@ -21,7 +21,9 @@ module.exports = _.extend(suite, {
       messages: {
         dog: function(arg, user) {
           test.equals(arg.foo, 123);
-          user.message('cat', {bar: 456});
+          user.message('cat', {
+            bar: 456
+          });
         }
       }
     });
@@ -29,7 +31,9 @@ module.exports = _.extend(suite, {
     client.configure({
       serverEvents: {
         begin: function() {
-          client.message('dog', {foo: 123});
+          client.message('dog', {
+            foo: 123
+          });
         }
       },
       messages: {
@@ -62,11 +66,15 @@ module.exports = _.extend(suite, {
       messages: {
         dog1: function(arg, user) {
           test.ok(true, 'received message from client 1');
-          user.message('cat', {bar: 456});
+          user.message('cat', {
+            bar: 456
+          });
         },
         dog2: function(arg, user) {
           test.ok(true, 'received message from client 2');
-          user.message('cat', {bar: 789});
+          user.message('cat', {
+            bar: 789
+          });
         }
       }
     });
@@ -140,7 +148,7 @@ module.exports = _.extend(suite, {
     }
 
     function joinRoomHandler(room) {
-      step('joined '+ room.name);
+      step('joined ' + room.name);
       if (steps[0] === 'leave room') {
         step('leave room');
         client1.message('leaveRoom');
@@ -212,10 +220,19 @@ module.exports = _.extend(suite, {
   // to test those ones.
   serverEvents: function(test) {
 
-    test.expect(7);
+    test.expect(1);
 
     var server = this.server;
     var client = suite.createClient();
+    var events = [];
+    var expectedEvents = [
+      'begin',
+      'disconnect',
+      'disconnect',
+      'resume',
+      'disconnect',
+      'end'
+    ];
 
     server.configure({
       port: this.port
@@ -223,23 +240,21 @@ module.exports = _.extend(suite, {
 
     client.configure({
       serverEvents: {
-        connecting: function() {
-          test.ok(true, 'connecting event happened');
-        },
         begin: function() {
-          test.ok(true, 'begin event happened');
+          events.push('begin');
           client._disconnect();
         },
         disconnect: function() {
-          test.ok(true, 'disconnect event happened');
+          events.push('disconnect');
           client._connect();
         },
         resume: function() {
-          test.ok(true, 'resume event happened');
+          events.push('resume');
           client.stop();
         },
         end: function() {
-          test.ok(true, 'end event happened');
+          events.push('end');
+          test.deepEqual(events, expectedEvents);
           test.done();
         }
       }
@@ -256,16 +271,22 @@ module.exports = _.extend(suite, {
 
     var client = suite.createClient();
 
+    var errors = 0;
+
     client.configure({
       serverEvents: {
         error: function(arg) {
-          test.ok(arg.match('ECONNREFUSED'));
-          test.done();
+          if (!errors) {
+            errors++;
+            console.log('*** erorrs', errors, arg);
+            test.ok(arg.match('Connect error'));
+            test.done();
+          }
         }
       }
     });
 
-    client.run(this.host + '123');
+    client.run(this.host.replace(this.port, '12345'));
 
   },
 
@@ -1212,7 +1233,7 @@ module.exports = _.extend(suite, {
     client.run(this.host);
   },
 
-  initialData: function (test) {
+  initialData: function(test) {
     test.expect(1);
 
     var server = this.server;
@@ -1221,7 +1242,7 @@ module.exports = _.extend(suite, {
     server.configure({
       port: this.port,
       lobby: {
-        newMember: function (user) {
+        newMember: function(user) {
           test.equals(user.data.test, 'test');
           test.done();
         }

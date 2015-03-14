@@ -42,9 +42,7 @@ module.exports = _.extend(suite, {
             test.equal(user.id, client.currentUser());
             test.equal(user.id, currentUser);
             test.deepEqual(eventsOrder, ['begin', 'disconnect', 'resume']);
-            setTimeout(function () {
-              test.done();
-            });
+            test.done();
         }
       }
     });

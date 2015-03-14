@@ -218,11 +218,11 @@
       },
 
       _connect: function() {
-        socket.socket.connect();
+        socket.connect();
       },
 
       connected: function() {
-        return socket && socket.socket.connected;
+        return socket && socket.connected;
       },
 
       currentUser: function() {
