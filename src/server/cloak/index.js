@@ -1,7 +1,7 @@
 /* cloak server */
 /* jshint node:true */
 
-var _ = require('underscore');
+var _ = require('lodash');
 var socketIO = require('socket.io');
 var uuid = require('node-uuid');
 var colors = require('colors');
@@ -52,11 +52,11 @@ module.exports = (function() {
 
     // configure the server
     configure: function(configArg) {
-
+      
       config = _.extend({}, defaults);
       events = {};
 
-      _(configArg).forEach(function(val, key) {
+      _.forEach(configArg, function(val, key) {
         if (key === 'room' ||
             key === 'lobby') {
           events[key] = val;
@@ -163,7 +163,7 @@ module.exports = (function() {
         lobby._pulse();
 
         // Pulse all rooms
-        _(rooms).forEach(function(room) {
+        _.forEach(rooms, function(room) {
           var oldEnoughToPrune = room.members.length < 1 && new Date().getTime() - room._lastEmpty >= config.pruneEmptyRooms;
           var roomExpired = config.roomLife !== null && new Date().getTime() - room.created >= config.roomLife;
 
@@ -191,7 +191,7 @@ module.exports = (function() {
 
         // Prune rooms with member counts below minRoomMembers
         if (config.minRoomMembers !== null) {
-          _(rooms).forEach(function(room) {
+          _.forEach(rooms, function(room) {
             if (room._hasReachedMin && room.members.length < config.minRoomMembers) {
               room.delete();
             }
@@ -201,7 +201,7 @@ module.exports = (function() {
         // reconnectWait and reconnectWaitRoomless
         // aka prune users that have been disconnected too long
         if (config.reconnectWait !== null || config.reconnectWaitRoomless !== null) {
-          _(users).forEach(function(user) {
+          _.forEach(users, function(user) {
 
             if (user === undefined) {
               console.log(user);
@@ -234,7 +234,7 @@ module.exports = (function() {
 
     _setupHandlers: function(socket) {
 
-      _(config.messages).each(function(handler, name) {
+      _.each(config.messages, function(handler, name) {
         socket.on('message-' + name, function(arg) {
           var user = cloak._getUserForSocket(socket);
           try {
@@ -251,7 +251,9 @@ module.exports = (function() {
 
     getRooms: function(json) {
       if (json) {
-        return _.invoke(rooms, '_roomData');
+        return _.map(rooms, function (room) {
+          return _.invoke(room, '_roomData');
+        });
       }
       else {
         return _.values(rooms);
@@ -302,11 +304,11 @@ module.exports = (function() {
     },
 
     userCount: function() {
-      return _(users).size();
+      return _.size(users);
     },
 
     roomCount: function() {
-      return _(rooms).size();
+      return _.size(rooms);
     },
 
     getUser: function(id) {
@@ -315,7 +317,9 @@ module.exports = (function() {
 
     getUsers: function(json) {
       if (json) {
-        return _.invoke(users, '_userData');
+        return _.map(users, function (user) {
+          return _.invoke(user, '_userData');
+        });
       }
       else {
         return _.values(users);
@@ -323,7 +327,7 @@ module.exports = (function() {
     },
 
     messageAll: function(name, arg) {
-      _(users).forEach(function(user) {
+      _.forEach(users, function(user) {
         user.message(name, arg);
       });
     },
@@ -334,12 +338,12 @@ module.exports = (function() {
       clearInterval(gameLoopInterval);
 
       // Delete all users
-      _(users).forEach(function(user) {
+      _.forEach(users, function(user) {
         user.delete();
       });
 
       // Delete all rooms
-      _(rooms).forEach(function(room) {
+      _.forEach(rooms, function(room) {
         room.delete();
       });
 

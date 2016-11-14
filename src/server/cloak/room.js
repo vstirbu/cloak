@@ -1,6 +1,6 @@
 /* jshint node:true */
 
-var _ = require('underscore');
+var _ = require('lodash');
 var uuid = require('node-uuid');
 
 module.exports = (function() {
@@ -48,7 +48,7 @@ module.exports = (function() {
       if (user.room !== this) {
         return;
       }
-      this.members = _(this.members).without(user);
+      this.members = _.without(this.members, user);
       delete user.room;
       if (this.members.length < 1) {
         this._lastEmpty = new Date().getTime();
@@ -82,7 +82,7 @@ module.exports = (function() {
 
     delete: function() {
       this._closing = true;
-      _(this.members).forEach(function(user) {
+      _.forEach(this.members, function(user) {
         user.leaveRoom();
       });
       this._emitEvent('close', this);

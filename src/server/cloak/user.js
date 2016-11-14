@@ -1,6 +1,6 @@
 /* jshint node:true */
 
-var _ = require('underscore');
+var _ = require('lodash');
 var uuid = require('node-uuid');
 
 module.exports = (function() {
