@@ -4,10 +4,10 @@
 (function(global, factory) {
 
   if (typeof global.define === 'function' && global.define.amd) {
-    define(['underscore', 'socket.io-client'], factory);
+    define(['lodash', 'socket.io-client'], factory);
   } else if (typeof module === 'object' && module.exports) {
     module.exports = factory(
-      require('underscore'), require('socket.io-client')
+      require('lodash'), require('socket.io-client')
     );
   } else {
     global.cloak = factory(global._, global.io);
@@ -41,7 +41,7 @@
         // When specified, the `messages` option should trigger the complete
         // removal of any previously-bound message handlers.
         if (socket && configArg.messages) {
-          _(config.messages).forEach(function(handler, name, messageHandlers) {
+          _.forEach(config.messages, function(handler, name, messageHandlers) {
             socket.removeListener('message-' + name);
             cloak._off('message-' + name, handler);
           });
@@ -56,14 +56,14 @@
 
       _applyConfig: function(toApply) {
 
-        _(toApply.messages).forEach(function(handler, name) {
+        _.forEach(toApply.messages, function(handler, name) {
           socket.on('message-' + name, function(data) {
             cloak._trigger('message-' + name, data);
           });
           cloak._on('message-' + name, handler);
         });
 
-        _(toApply.serverEvents).forEach(function(eventHandler, eventName) {
+        _.forEach(toApply.serverEvents, function(eventHandler, eventName) {
           cloak._on('cloak-' + eventName, eventHandler);
         });
 
@@ -78,7 +78,7 @@
       },
 
       _off: function(event, handler) {
-        events[event] = _(events[event]).without(handler);
+        events[event] = _.without(events[event], handler);
       },
 
       _trigger: function(event, arg) {
