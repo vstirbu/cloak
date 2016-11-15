@@ -90,7 +90,13 @@ module.exports = (function() {
         delete config.express;
       }
 
-      // io.set('log level', config.logLevel);
+      // Apply user Socket.IO settings
+      var ioConfig = config.socketIo;
+      if (typeof ioConfig === 'object') {
+        for (var key in ioConfig) {
+          io.set(key, ioConfig[key]);
+        }
+      }
 
       lobby = new Room(cloak, 'Lobby', 0, events.lobby, true);
 
@@ -364,6 +370,11 @@ module.exports = (function() {
 
     createTimer: function(name, millis, descending) {
       return new Timer(name, millis || 0, descending || false);
+    },
+
+    // For testing
+    _getIo: function() {
+      return io;
     }
 
   };

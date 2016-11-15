@@ -1333,6 +1333,33 @@ module.exports = _.extend(suite, {
 
     server.run();
     client.run(this.host);
+  },
+
+  // Test Socket.IO configuration on the server
+  serverIoConfig: function(test) {
+
+    test.expect(3);
+
+    var server = this.server;
+    var client = suite.createClient();
+
+    server.configure({
+      port: this.port,
+      socketIo: {
+        'heartbeat interval': 123,
+        'heartbeat timeout': 456,
+        'transports': 'websocket'
+      }
+    });
+
+    server.run();
+
+    test.equals(server._getIo().engine.pingInterval, 123);
+    test.equals(server._getIo().engine.pingTimeout, 456);
+    test.equals(server._getIo().engine.transports, 'websocket');
+    test.done();
+
+
   }
 
 });

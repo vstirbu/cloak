@@ -1,7 +1,7 @@
 {
   "name": "cloak",
   "description": "A network layer for HTML5 games",
-  "version": "0.2.6",
+  "version": "0.4.0",
   "homepage": "https://github.com/incompl/cloak",
   "author": {
     "name": "Greg and Darius at Bocoup",
@@ -25,9 +25,7 @@
     "node": ">= 0.8.0"
   },
   "keywords": [
-    "html5",
-    "game",
-    "games"
+    "html5", "game", "games"
   ],
   "dependencies": {
     "colors": "^1.1.2",
