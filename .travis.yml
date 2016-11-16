@@ -6,7 +6,7 @@ node_js:
 
 before_script:
   - npm install -g grunt
+  - cd test && npm install && cd ..
   - cd src/server && npm install
-  - cd test && npm install
 
 script: grunt test
