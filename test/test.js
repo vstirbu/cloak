@@ -220,7 +220,7 @@ module.exports = _.extend(suite, {
   // to test those ones.
   serverEvents: function(test) {
 
-    test.expect(9);
+    test.expect(7);
 
     var server = this.server;
     var client = suite.createClient();
