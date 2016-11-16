@@ -69,7 +69,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
-
   grunt.registerTask('test', ['jshint', 'nodeunit']);
   grunt.registerTask('build-npm', ['jshint', 'copy', 'uglify']);
   grunt.registerTask('publish-site', ['githubPages:target']);

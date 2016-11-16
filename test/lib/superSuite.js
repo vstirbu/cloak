@@ -2,10 +2,7 @@
 
 // Nodeunit tests for Cloak client and server
 
-var connect = require('connect');
-var path = require('path');
 var _ = require('lodash');
-var io = require('socket.io-client');
 
 var cloakServer = require('../../src/server/cloak');
 var createCloakClient = require('../../src/client/cloak');

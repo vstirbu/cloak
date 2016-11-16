@@ -1,6 +1,14 @@
 {
-  "name": "cloak-builder",
-  "version": "0.0.1",
+  "name": "cloak",
+  "description": "A network layer for HTML5 games",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "node-uuid": "^1.4.7",
+    "socket.io": "^1.5.1",
+    "lodash": "^4.17.0"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-uglify": "^2.0.0",
@@ -9,10 +17,6 @@
     "grunt-contrib-nodeunit": "^1.0.0",
     "grunt-contrib-jshint": "^1.0.0",
     "express": "^4.14.0"
-  },
-  "dependencies": {
-    "socket.io-client": "^1.5.1",
-    "lodash": "^4.17.0"
   },
   "scripts": {
     "test": "grunt test"
