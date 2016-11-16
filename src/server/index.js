@@ -4,7 +4,7 @@
 var _ = require('lodash');
 var socketIO = require('socket.io');
 var uuid = require('node-uuid');
-var colors = require('colors');
+var debug = require('debug')('cloak');
 
 var User = require('./user.js');
 var Room = require('./room.js');
@@ -38,12 +38,6 @@ function cloakFactory() {
 
   var config;
   var events;
-
-  colors.setTheme({
-    info: 'cyan',
-    warn: 'yellow',
-    error: 'red'
-  });
 
   var cloak = {
 
@@ -80,11 +74,11 @@ function cloakFactory() {
       io = socketIO(config.express || config.port);
 
       if (config.express) {
-        console.log(('cloak running with express on port ' +
+        debug(('cloak running with express on port ' +
                     config.express.address().port).info);
       }
       else {
-        console.log(('cloak running on port ' + config.port).info);
+        debug(('cloak running on port ' + config.port).info);
       }
 
       // We won't want to try to serialize this later
@@ -107,7 +101,7 @@ function cloakFactory() {
       Room.prototype._minRoomMembers = config.minRoomMembers;
 
       io.sockets.on('connection', function(socket) {
-        console.log((cloak._host(socket) + ' connects').info);
+        debug((cloak._host(socket) + ' connects').info);
 
         socket.on('disconnect', function(data) {
           var uid = socketIdToUserId[socket.id];
@@ -120,7 +114,7 @@ function cloakFactory() {
           if (config.clientEvents && config.clientEvents.disconnect) {
             config.clientEvents.disconnect(user);
           }
-          console.log((cloak._host(socket) + ' disconnects').info);
+          debug((cloak._host(socket) + ' disconnects').info);
         });
 
         socket.on('cloak-begin', function(data) {
@@ -130,7 +124,7 @@ function cloakFactory() {
           socketIdToUserId[socket.id] = user.id;
           cloak._setupHandlers(socket);
           socket.emit('cloak-beginResponse', {uid:user.id, config:config});
-          console.log((cloak._host(socket) + ' begins').info);
+          debug((cloak._host(socket) + ' begins').info);
           if (config.autoJoinLobby) {
             lobby.addMember(user);
           }
@@ -154,11 +148,11 @@ function cloakFactory() {
             if (config.clientEvents && config.clientEvents.resume) {
               config.clientEvents.resume(user);
             }
-            console.log((cloak._host(socket) + ' resumes').info);
+            debug((cloak._host(socket) + ' resumes').info);
           }
           else {
             socket.emit('cloak-resumeResponse', {valid: false});
-            console.log((cloak._host(socket) + ' fails to resume').info);
+            debug((cloak._host(socket) + ' fails to resume').info);
           }
         });
 
@@ -214,7 +208,7 @@ function cloakFactory() {
           _.forEach(users, function(user) {
 
             if (user === undefined) {
-              console.log(user);
+              debug(user);
               return;
             }
 

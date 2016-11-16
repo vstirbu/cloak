@@ -1,6 +1,7 @@
 /* jshint node:true */
 
 var _ = require('lodash');
+var debug = require('debug')('cloak:main');
 var uuid = require('node-uuid');
 
 module.exports = Room;

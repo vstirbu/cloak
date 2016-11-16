@@ -3,6 +3,7 @@
 // Basic tests
 
 var _ = require('lodash');
+var debug = require('debug')('cloak:test');
 
 var suite = Object.create(require('./lib/superSuite.js'));
 
@@ -220,7 +221,7 @@ module.exports = _.extend(suite, {
   // to test those ones.
   serverEvents: function(test) {
 
-    test.expect(7);
+    test.expect(9);
 
     var server = this.server;
     var client = suite.createClient();
@@ -271,7 +272,7 @@ module.exports = _.extend(suite, {
         error: function(arg) {
           if (!errors) {
             errors++;
-            console.log('*** erorrs', errors, arg);
+            debug('*** erorrs', errors, arg);
             test.ok(arg.match('Connect error'));
             test.done();
           }

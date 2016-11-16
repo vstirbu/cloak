@@ -3,6 +3,7 @@
 // Nodeunit tests for Cloak client and server
 
 var _ = require('lodash');
+var debug = require('debug')('cloak:super-suite');
 
 var cloakServer = require('../../');
 var createCloakClient = require('../../src/client/cloak');
@@ -33,17 +34,17 @@ module.exports = {
     try {
       _.forEach(clients, function(client) {
         if (client.connected()) {
-          console.log('ending client');
+          debug('ending client');
           client.stop();
         }
         else {
-          console.log('client already disconnected');
+          debug('client already disconnected');
         }
       });
       clients = null;
-      console.log('stopping server');
+      debug('stopping server');
       this.server.stop(function() {
-        console.log('server stopped');
+        debug('server stopped');
         callback();
       });
     }
