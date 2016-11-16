@@ -2,7 +2,7 @@
 
 // clientEvents tests
 
-var _ = require('underscore');
+var _ = require('lodash');
 
 var suite = Object.create(require('./lib/superSuite.js'));
 

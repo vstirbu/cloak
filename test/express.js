@@ -2,7 +2,7 @@
 
 // Basic tests
 
-var _ = require('underscore');
+var _ = require('lodash');
 var express = require('express');
 
 var suite = Object.create(require('./lib/superSuite.js'));
