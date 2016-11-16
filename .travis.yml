@@ -3,3 +3,9 @@ node_js:
   - "0.12"
   - "4"
   - "6"
+
+before_script:
+  - npm install -g grunt
+  - cd src/server && npm install
+
+script: grunt test
