@@ -4,7 +4,7 @@
 
 var connect = require('connect');
 var path = require('path');
-var _ = require('underscore');
+var _ = require('lodash');
 var io = require('socket.io-client');
 
 var cloakServer = require('../../src/server/cloak');
@@ -34,7 +34,7 @@ module.exports = {
   // Shut down server and all clients
   tearDown: function(callback) {
     try {
-      _(clients).forEach(function(client) {
+      _.forEach(clients, function(client) {
         if (client.connected()) {
           console.log('ending client');
           client.stop();
