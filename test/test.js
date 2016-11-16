@@ -220,19 +220,10 @@ module.exports = _.extend(suite, {
   // to test those ones.
   serverEvents: function(test) {
 
-    test.expect(1);
+    test.expect(9);
 
     var server = this.server;
     var client = suite.createClient();
-    var events = [];
-    var expectedEvents = [
-      'begin',
-      'disconnect',
-      'disconnect',
-      'resume',
-      'disconnect',
-      'end'
-    ];
 
     server.configure({
       port: this.port
@@ -240,21 +231,23 @@ module.exports = _.extend(suite, {
 
     client.configure({
       serverEvents: {
+        connecting: function() {
+          test.ok(true, 'connecting event happened');
+        },
         begin: function() {
-          events.push('begin');
+          test.ok(true, 'begin event happened');
           client._disconnect();
         },
         disconnect: function() {
-          events.push('disconnect');
+          test.ok(true, 'disconnect event happened');
           client._connect();
         },
         resume: function() {
-          events.push('resume');
+          test.ok(true, 'resume event happened');
           client.stop();
         },
         end: function() {
-          events.push('end');
-          test.deepEqual(events, expectedEvents);
+          test.ok(true, 'end event happened');
           test.done();
         }
       }
