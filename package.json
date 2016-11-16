@@ -13,5 +13,8 @@
   "dependencies": {
     "socket.io-client": "^1.5.1",
     "lodash": "^4.17.0"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }
