@@ -96,15 +96,14 @@ Room.prototype._serverMessageMembers = function(name, arg) {
 Room.prototype._shouldAllowUser = function(user) {
   if (this._roomEvents.shouldAllowUser) {
     return this._emitEvent('shouldAllowUser', this, user);
-  }
-  else {
+  } else {
     return true;
   }
 };
 
 Room.prototype._emitEvent = function(event, context, args) {
   var roomEvent = this._roomEvents[event];
-  if (args !== undefined && !Array.isArray(args)) {
+  if (!_.isUndefined(args) && !Array.isArray(args)) {
     args = [args];
   }
   if (!!roomEvent) {

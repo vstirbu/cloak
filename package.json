@@ -3,6 +3,7 @@
   "description": "A network layer for HTML5 games",
   "version": "1.0.0",
   "license": "MIT",
+  "main": "src/server/index.js",
   "dependencies": {
     "colors": "^1.1.2",
     "node-uuid": "^1.4.7",

@@ -4,7 +4,7 @@
 
 var _ = require('lodash');
 
-var cloakServer = require('../../src/server/cloak');
+var cloakServer = require('../../');
 var createCloakClient = require('../../src/client/cloak');
 
 var clients;
