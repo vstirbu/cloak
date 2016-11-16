@@ -10,7 +10,23 @@ var User = require('./user.js');
 var Room = require('./room.js');
 var Timer = require('./timer.js');
 
-module.exports = (function() {
+module.exports = cloakFactory();
+
+var defaults = {
+  port: 8090,
+  logLevel: 1,
+  gameLoopSpeed: 100,
+  defaultRoomSize: null,
+  autoCreateRooms: false,
+  minRoomMembers: null,
+  reconnectWait: 10000,
+  pruneEmptyRooms: null,
+  roomLife: null,
+  autoJoinLobby: true,
+  notifyRoomChanges: true
+};
+
+function cloakFactory() {
 
   var users = {};
   var rooms = {};
@@ -19,20 +35,6 @@ module.exports = (function() {
   var gameLoopInterval;
   var lobby;
   var roomNum = 0;
-
-  var defaults = {
-    port: 8090,
-    logLevel: 1,
-    gameLoopSpeed: 100,
-    defaultRoomSize: null,
-    autoCreateRooms: false,
-    minRoomMembers: null,
-    reconnectWait: 10000,
-    pruneEmptyRooms: null,
-    roomLife: null,
-    autoJoinLobby: true,
-    notifyRoomChanges: true
-  };
 
   var config;
   var events;
@@ -92,7 +94,7 @@ module.exports = (function() {
 
       // Apply user Socket.IO settings
       var ioConfig = config.socketIo;
-      if (typeof ioConfig === 'object') {
+      if (_.isObject(ioConfig)) {
         for (var key in ioConfig) {
           io.set(key, ioConfig[key]);
         }
@@ -162,7 +164,9 @@ module.exports = (function() {
 
       });
 
-      gameLoopInterval = setInterval(function() {
+      gameLoopInterval = setInterval(gameLoop, config.gameLoopSpeed);
+
+      function gameLoop() {
         var room;
 
         // Pulse lobby
@@ -234,7 +238,7 @@ module.exports = (function() {
           });
         }
 
-      }, config.gameLoopSpeed);
+      }
 
     },
 
@@ -381,4 +385,4 @@ module.exports = (function() {
 
   return cloak;
 
-})();
+}
