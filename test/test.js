@@ -221,7 +221,7 @@ module.exports = _.extend(suite, {
   // to test those ones.
   serverEvents: function(test) {
 
-    test.expect(9);
+    // test.expect(9);
 
     var server = this.server;
     var client = suite.createClient();
@@ -233,21 +233,26 @@ module.exports = _.extend(suite, {
     client.configure({
       serverEvents: {
         connecting: function() {
+          debug('connecting');
           test.ok(true, 'connecting event happened');
         },
         begin: function() {
+          debug('begin');
           test.ok(true, 'begin event happened');
           client._disconnect();
         },
         disconnect: function() {
+          debug('disconnect');
           test.ok(true, 'disconnect event happened');
           client._connect();
         },
         resume: function() {
+          debug('resume');
           test.ok(true, 'resume event happened');
           client.stop();
         },
         end: function() {
+          debug('end');
           test.ok(true, 'end event happened');
           test.done();
         }

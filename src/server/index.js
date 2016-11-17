@@ -100,7 +100,7 @@ function cloakFactory() {
       Room.prototype._autoJoinLobby = config.autoJoinLobby;
       Room.prototype._minRoomMembers = config.minRoomMembers;
 
-      io.sockets.on('connection', function(socket) {
+      io.on('connection', function(socket) {
         debug((cloak._host(socket) + ' connects').info);
 
         socket.on('disconnect', function(data) {
