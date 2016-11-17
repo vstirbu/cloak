@@ -4,12 +4,14 @@
   "version": "1.0.0",
   "license": "MIT",
   "main": "src/server/index.js",
+  "browser": "src/client/cloak.js",
   "dependencies": {
     "colors": "^1.1.2",
     "debug": "^2.3.2",
     "lodash": "^4.17.0",
     "node-uuid": "^1.4.7",
-    "socket.io": "^1.5.1"
+    "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
@@ -18,8 +20,7 @@
     "grunt-github-pages": "^0.0.4",
     "grunt-contrib-nodeunit": "^1.0.0",
     "grunt-contrib-jshint": "^1.0.0",
-    "express": "^4.14.0",
-    "socket.io-client": "^1.5.1"
+    "express": "^4.14.0"
   },
   "scripts": {
     "test": "grunt test"

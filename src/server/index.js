@@ -53,11 +53,9 @@ function cloakFactory() {
       events = {};
 
       _.forEach(configArg, function(val, key) {
-        if (key === 'room' ||
-            key === 'lobby') {
+        if (_.includes(['room', 'lobby'], key)) {
           events[key] = val;
-        }
-        else {
+        } else {
           config[key] = val;
         }
       });
@@ -66,7 +64,7 @@ function cloakFactory() {
     // run the server
     run: function() {
 
-      if (this.port !== undefined && typeof this.port !== 'number') {
+      if (_.isFinite(this.port)) {
         throw 'Port must be a number. Trying to use express? ' +
               'Pass the server into express instead of port.';
       }
