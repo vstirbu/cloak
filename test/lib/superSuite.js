@@ -5,7 +5,7 @@
 var _ = require('lodash');
 var debug = require('debug')('cloak:super-suite');
 
-var cloakServer = require('../../');
+var cloakServer = require('../../src/server');
 var createCloakClient = require('../../src/client/cloak');
 
 var clients;

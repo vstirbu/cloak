@@ -13,8 +13,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: true,
-            src: ['src/server/cloak/*.js',
-                  'src/server/package.json'],
+            src: ['src/server/*.js'],
             dest: 'dest',
             filter: 'isFile'
           },
@@ -23,8 +22,11 @@ module.exports = function(grunt) {
             dest: 'dest/cloak-client.js'
           },
           {
-            src: 'README.md',
-            dest: 'dest/README.md'
+            src: [
+              'package.json',
+              'README.md'
+            ],
+            dest: 'dest/'
           }
         ]
       }
