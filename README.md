@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/vstirbu/cloak.svg?branch=master)](https://travis-ci.org/vstirbu/cloak)
+
 ## What is Cloak?
 
 [incompl.github.io/cloak/](http://incompl.github.io/cloak/)
