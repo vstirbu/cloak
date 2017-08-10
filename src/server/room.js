@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var debug = require('debug')('cloak:main');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 
 module.exports = Room;
 

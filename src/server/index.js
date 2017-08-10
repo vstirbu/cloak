@@ -3,7 +3,7 @@
 
 var _ = require('lodash');
 var socketIO = require('socket.io');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var debug = require('debug')('cloak');
 
 var User = require('./user.js');

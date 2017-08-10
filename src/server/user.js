@@ -1,7 +1,7 @@
 /* jshint node:true */
 
 var _ = require('lodash');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 
 module.exports = User;
 
