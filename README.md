@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/vstirbu/cloak.svg?branch=master)](https://travis-ci.org/vstirbu/cloak)
-
 ## Why this fork?
 
+[![Build Status](https://travis-ci.org/vstirbu/cloak.svg?branch=master)](https://travis-ci.org/vstirbu/cloak)
 [![Greenkeeper badge](https://badges.greenkeeper.io/vstirbu/cloak.svg)](https://greenkeeper.io/)
 
 This is a fork of the cloak library developed at Bocoup. As the original project is not maintained, this fork has been upgraded to support newer dependencies versions (most importantly socket-io). The fork does not change the API of the library.
