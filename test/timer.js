@@ -68,7 +68,7 @@ module.exports = _.extend(suite, {
         timer.start();
         setTimeout(function() {
           test.ok(timer.getValue() > 190);
-          test.ok(timer.getValue() < 210);
+          test.ok(timer.getValue() < 220);
           test.done();
         }, 100);
       }, 100);
