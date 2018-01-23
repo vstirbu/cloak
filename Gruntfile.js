@@ -24,6 +24,7 @@ module.exports = function(grunt) {
           {
             src: [
               'package.json',
+              'CHANGELOG.md',
               'README.md'
             ],
             dest: 'dest/'
